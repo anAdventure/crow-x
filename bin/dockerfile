@@ -1,0 +1,11 @@
+FROM webhippie/java
+
+MAINTAINER xzh
+
+ADD ./crowx-admin/target/crowx-admin.jar crowx.jar
+
+
+RUN bash -c 'touch crowx.jar'
+ENTRYPOINT ["java","-jar","crowx.jar","--spring.profiles.active=docker"]
+
+EXPOSE 8080
