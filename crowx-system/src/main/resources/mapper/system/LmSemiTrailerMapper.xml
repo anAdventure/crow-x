@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crowx.system.mapper.LmSemiTrailerMapper">
+    
+    <resultMap type="LmSemiTrailer" id="LmSemiTrailerResult">
+        <result property="id"    column="id"    />
+        <result property="grossWeight"    column="gross_weight"    />
+        <result property="tareWeight"    column="tare_weight"    />
+        <result property="netWeight"    column="net_weight"    />
+        <result property="price"    column="price"    />
+        <result property="carNumber"    column="car_number"    />
+        <result property="allPrice"    column="all_price"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+    </resultMap>
+
+    <sql id="selectLmSemiTrailerVo">
+        select id, gross_weight, tare_weight, net_weight, price, car_number, all_price, create_time, update_time, create_by, update_by from lm_semi_trailer
+    </sql>
+
+    <select id="selectLmSemiTrailerList" parameterType="LmSemiTrailer" resultMap="LmSemiTrailerResult">
+        <include refid="selectLmSemiTrailerVo"/>
+        <where>  
+            <if test="grossWeight != null "> and gross_weight = #{grossWeight}</if>
+            <if test="tareWeight != null "> and tare_weight = #{tareWeight}</if>
+            <if test="netWeight != null "> and net_weight = #{netWeight}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="carNumber != null  and carNumber != ''"> and car_number like concat('%',#{carNumber},'%')</if>
+            <if test="allPrice != null "> and all_price = #{allPrice}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectLmSemiTrailerById" parameterType="Long" resultMap="LmSemiTrailerResult">
+        <include refid="selectLmSemiTrailerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLmSemiTrailer" parameterType="LmSemiTrailer">
+        insert into lm_semi_trailer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="grossWeight != null">gross_weight,</if>
+            <if test="tareWeight != null">tare_weight,</if>
+            <if test="netWeight != null">net_weight,</if>
+            <if test="price != null">price,</if>
+            <if test="carNumber != null">car_number,</if>
+            <if test="allPrice != null">all_price,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="grossWeight != null">#{grossWeight},</if>
+            <if test="tareWeight != null">#{tareWeight},</if>
+            <if test="netWeight != null">#{netWeight},</if>
+            <if test="price != null">#{price},</if>
+            <if test="carNumber != null">#{carNumber},</if>
+            <if test="allPrice != null">#{allPrice},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLmSemiTrailer" parameterType="LmSemiTrailer">
+        update lm_semi_trailer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="grossWeight != null">gross_weight = #{grossWeight},</if>
+            <if test="tareWeight != null">tare_weight = #{tareWeight},</if>
+            <if test="netWeight != null">net_weight = #{netWeight},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="carNumber != null">car_number = #{carNumber},</if>
+            <if test="allPrice != null">all_price = #{allPrice},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLmSemiTrailerById" parameterType="Long">
+        delete from lm_semi_trailer where id = #{id}
+    </delete>
+
+    <delete id="deleteLmSemiTrailerByIds" parameterType="String">
+        delete from lm_semi_trailer where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

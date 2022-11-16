@@ -240,6 +240,7 @@
         <module>crowx-common</module>
         <module>crowx-test</module>
         <module>crowx-common-enhance</module>
+        <module>corwx-activiti</module>
     </modules>
     <packaging>pom</packaging>
 
